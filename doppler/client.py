@@ -37,7 +37,6 @@ class Doppler:
 
     @ttl_cache(ttl=60 * 60)
     def _get(self) -> dict:
-        print("Fetching secrets from Doppler...")  # For demonstration purposes
         logger.info("%s/%s > fetching secrets", self.project, self.config)
 
         response = requests.get(
@@ -59,8 +58,6 @@ class Doppler:
             secret = secrets[name]
             value = secret["computed"]
             type = secret["computedValueType"]["type"]
-
-            print(type, value)
 
             if type == "boolean":
                 return value.lower() == "true"
