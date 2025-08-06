@@ -7,14 +7,14 @@ on:
 env:
   ENV: test
   LOG_LEVEL: ERROR
-  DROPPLER_TOKEN: ${{ secrets.DROPPLER_TOKEN }}
+  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
     timeout-minutes: 5
 
     steps:

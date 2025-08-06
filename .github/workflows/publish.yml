@@ -28,7 +28,7 @@ jobs:
         run: poetry install --no-root
 
       - name: "PYPI: build and publish package"
-        run: poetry publish --build --username __token__ --password ${{ secrets.TOKEN_PYPI }}
+        run: poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
 
       - name: 'SLACK: notify'
         with:
