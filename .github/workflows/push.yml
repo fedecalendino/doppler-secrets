@@ -1,0 +1,64 @@
+name: Push to main branch
+
+on:
+  push:
+    branches: [main]
+
+env:
+  ENV: test
+  LOG_LEVEL: ERROR
+  DROPPLER_TOKEN: ${{ secrets.DROPPLER_TOKEN }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2.2.0
+
+      - name: Setup environment
+        run: poetry install
+
+      - name: Run tests
+        run: |
+          poetry run python3 -m unittest discover -s tests
+
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2.2.0
+
+      - name: Setup environment
+        run: poetry install
+
+      - name: Build package
+        run: poetry build
