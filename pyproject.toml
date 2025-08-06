@@ -5,7 +5,7 @@ documentation = "https://github.com/fedecalendino/doppler-secrets/blob/main/READ
 homepage = "https://github.com/fedecalendino/doppler-secrets"
 license = "MIT"
 readme = "README.md"
-version = "0.2.0"
+version = "0.3.0"
 
 authors = [
   "Fede Calendino <fede@calendino.com>",

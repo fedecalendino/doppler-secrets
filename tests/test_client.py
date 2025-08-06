@@ -8,6 +8,7 @@ from doppler import Doppler
 
 TEST_CASES = (
     ("HELLO", "WORLD"),
+    ("LIST", ["item1", "item2", "item3"]),
     ("SEVEN", 7),
     ("PI", 3.14),
     ("TRUE", True),
@@ -23,7 +24,13 @@ TEST_CASES = (
 class TestClient(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.doppler = Doppler("main", "test")
+        cls.doppler = Doppler(
+            "main",
+            "test",
+            defaults={
+                "ABC": 123,
+            },
+        )
 
     @ddt.data(*TEST_CASES)
     @ddt.unpack
@@ -42,3 +49,8 @@ class TestClient(TestCase):
     def test_getitem(self, name: str, expected: object):
         value = self.doppler[name]
         self.assertEqual(expected, value)
+
+    def test_defaults(self):
+        self.assertEqual(123, self.doppler.get("ABC"))
+        self.assertEqual(123, self.doppler.ABC)
+        self.assertEqual(123, self.doppler["ABC"])

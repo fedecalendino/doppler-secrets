@@ -12,10 +12,14 @@ logger = logging.getLogger(__name__)
 
 
 class Doppler:
-    def __init__(self, project: str, config: str, token: str = None, ttl: int = 60 * 60):
+    def __init__(
+        self, project: str, config: str, token: str = None, ttl: int = 60 * 60, defaults: dict[str, object] = None
+    ):
         self.project: str = project
         self.config: str = config
         self.token: str = token or os.getenv("DOPPLER_TOKEN")
+
+        self.defaults: dict[str, object] = defaults or {}
 
         self.cache_key: str = f"{self.project}/{self.config}"
 
@@ -63,11 +67,17 @@ class Doppler:
     def get(self, name: str) -> object:
         secrets = self._get()["secrets"]
 
-        try:
-            secret = secrets[name]
-            value = secret["computed"]
-            type = secret["computedValueType"]["type"]
+        if name not in secrets:
+            if name in self.defaults:
+                return self.defaults[name]
+            else:
+                raise KeyError(f"{name} is not a valid secret")
 
+        secret = secrets[name]
+        value = secret["computed"]
+        type = secret["computedValueType"]["type"]
+
+        try:
             if type == "boolean":
                 return value.lower() == "true"
             elif type == "integer":
@@ -83,6 +93,9 @@ class Doppler:
             elif type.startswith("json"):
                 return json.loads(value)
             else:
+                if "," in value:
+                    return value.split(",")
+
                 return value
         except KeyError:
             raise KeyError(f"{name} is not a valid secret")
