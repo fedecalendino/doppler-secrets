@@ -6,6 +6,7 @@ import ddt
 from doppler import Doppler
 
 TEST_CASES = (
+    ("ABC123", "abc123"),
     ("HELLO", "WORLD"),
     ("LIST", ["item1", "item2", "item3"]),
     ("SEVEN", 7),

@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import re
@@ -9,6 +8,8 @@ import requests
 from cachetools import TTLCache
 
 from .classes import DopplerJson
+
+ATTR_REGEX = r"^[A-Z][A-Z0-9_]*$"
 
 logger = logging.getLogger(__name__)
 
@@ -103,7 +104,7 @@ class Doppler:
             raise KeyError(f"{name} is not a valid secret")
 
     def __getattribute__(self, name: str):
-        if bool(re.fullmatch(r"[A-Z_]+", name)):
+        if bool(re.fullmatch(ATTR_REGEX, name)):
             return self.get(name)
 
         return super().__getattribute__(name)
