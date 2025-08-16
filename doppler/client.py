@@ -8,6 +8,8 @@ from datetime import datetime
 import requests
 from cachetools import TTLCache
 
+from .classes import DopplerJson
+
 logger = logging.getLogger(__name__)
 
 
@@ -91,7 +93,7 @@ class Doppler:
             elif type.startswith("uuid"):
                 return uuid.UUID(value)
             elif type.startswith("json"):
-                return json.loads(value)
+                return DopplerJson(name, value)
             else:
                 if "," in value:
                     return value.split(",")
