@@ -24,7 +24,7 @@ class TestClient(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.doppler = Doppler(
-            "main",
+            "doppler-secrets",
             "test",
             defaults={
                 "ABC": 123,

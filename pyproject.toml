@@ -5,7 +5,7 @@ documentation = "https://github.com/fedecalendino/doppler-secrets/blob/main/READ
 homepage = "https://github.com/fedecalendino/doppler-secrets"
 license = "MIT"
 readme = "README.md"
-version = "0.4.0"
+version = "0.4.1"
 
 authors = [
   "Fede Calendino <fede@calendino.com>",
@@ -30,6 +30,7 @@ packages = [
 python = "^3.10"
 requests = "^2.32.4"
 cachetools = "^6.1.0"
+pyjson5 = "^1.6.9"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
