@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class Doppler:
     def __init__(
-        self, project: str, config: str, token: str = None, ttl: int = 60 * 60, defaults: dict[str, object] = None
+        self, project: str, config: str, token: str = None, ttl: int = 60 * 60, defaults: dict[str, object] = None,
     ):
         self.project: str = project
         self.config: str = config

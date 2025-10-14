@@ -3,6 +3,7 @@ name: Push to main branch
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 env:
   ENV: test
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     timeout-minutes: 5
 
     steps:
@@ -52,7 +53,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.14"
 
       - name: Install Poetry
         uses: abatilo/actions-poetry@v2.2.0
